@@ -59,6 +59,6 @@ app.post('/api',upload.single('file'), function(req, res){
   fs.createReadStream(imgUrl).pipe(res)
 })
 
-app.listen(3000,function(result){
+app.listen(3200,function(result){
   console.log("OK")
 })
