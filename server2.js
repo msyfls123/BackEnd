@@ -1,10 +1,16 @@
 var fs = require("fs");
+var path = require('path');
 var express = require('express');
 var exphbs  = require('express-handlebars');
 var bodyParser = require('body-parser');
 var multer = require('multer');
-var path = require('path');
 
+var webpack = require('webpack');
+var config = require('./webpack.config');
+var compiler = webpack(config);
+
+
+// test file read & write
 var options = {encoding:'utf8', flag:'w'};
 
 var dataObj = {
@@ -25,17 +31,25 @@ fs.writeFile('./data.json',dataObjStr,options,function(err){
     }
 })
 
-
-
 var app = express();
 
+//handlebars
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
+//bodyParser
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
-// app.use(multer()); // for parsing multipart/form-data
 
+//webpack
+app.use(require('webpack-dev-middleware')(compiler, {
+  noInfo: false,
+  publicPath: '/dist',
+  stats: { colors: true }
+}));
+app.use(require('webpack-hot-middleware')(compiler));
+
+//get image upload
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, './uploads')
@@ -50,15 +64,19 @@ app.get('/form',function(req, res){
   res.render('test');
 })
 
-app.get('/:time', function (req, res) {
-    res.send("Success: "+req.params.time+"\nQuery: "+req.query.time);
-});
-
 app.post('/api',upload.single('file'), function(req, res){
   var imgUrl = path.join(__dirname,'uploads',req.file.filename);
   fs.createReadStream(imgUrl).pipe(res)
 })
 
-app.listen(3200,function(result){
+app.get('/', function(req, res) {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+app.get('/time/:time', function (req, res) {
+    res.send("Success: "+req.params.time+"\nQuery: "+req.query.time);
+});
+
+app.listen(4200,function(result){
   console.log("OK")
 })
