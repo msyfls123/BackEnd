@@ -12,7 +12,7 @@ class Root extends Component {
   render() {
     return (
       <div>
-        XJW，我好喜欢你啊 But  !
+        XJW，我好喜欢你啊!
       </div>
     )
   }
