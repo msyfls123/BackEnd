@@ -2,19 +2,20 @@ body{
   background: #333;
   color: #fff;
 }
-.container {
-  display: table-cell;
+.container2 {
+  display: table;
   background-color: rgba(255, 255, 255, 0.2);
-  width: 50%;
+  max-width: 80%;
+  margin: 20px auto;
 }
-.container > div,
+.container2 > div,
 .gu-mirror {
   margin: 10px;
   padding: 10px;
   background-color: rgba(0, 0, 0, 0.2);
   transition: opacity 0.4s ease-in-out;
 }
-.container > div {
+.container2 > div {
   cursor: move;
   cursor: grab;
   cursor: -moz-grab;
@@ -46,4 +47,7 @@ body{
   opacity: 0.2;
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
   filter: alpha(opacity=20);
+}
+.btn.btn-default.glyphicon.glyphicon-pencil{
+  margin-top: -2px;
 }
