@@ -17,6 +17,7 @@ var exphbs = require('express-handlebars');
 var bodyParser = require('body-parser');
 var multer = require('multer');
 var ROOT_PATH = path.join(__dirname, '../../');
+var router = require('./server3');
 
 var webpack = require('webpack');
 var config = require('../../webpack.config');
@@ -38,6 +39,7 @@ fs.writeFile(path.join(ROOT_PATH, 'data', 'data.json'), dataObjStr, options, fun
 });
 
 var app = express();
+app.use('/orm', router);
 
 //handlebars
 app.set('views', path.join(ROOT_PATH, 'views'));

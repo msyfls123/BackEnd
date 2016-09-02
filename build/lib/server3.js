@@ -1,3 +1,5 @@
+'use strict';
+
 var express = require('express');
 var router = express.Router();
 var app = express();
@@ -11,47 +13,46 @@ var sequelize = new Sequelize('test', 'test', 'test', {
     max: 5,
     min: 0,
     idle: 10000
-  },
+  }
 });
-var Project = sequelize.import(__dirname + "/../model/project")
-var User = sequelize.import(__dirname + "/../model/user")
+var Project = sequelize.import(__dirname + "/../model/project");
+var User = sequelize.import(__dirname + "/../model/user");
 
-
-router.get('/find',function(req, res){
+router.get('/find', function (req, res) {
   Project.findAll({
-    where:{
+    where: {
       createdAt: {
         $lt: new Date(),
         $gt: new Date(new Date() - 24 * 60 * 60 * 1000)
       }
     }
-  }).then(function(project) {
+  }).then(function (project) {
     console.log(project);
     res.json(project);
-  })
-})
+  });
+});
 
-router.get('/',function(req,res){
+router.get('/', function (req, res) {
   User.create({
     firstName: 'John',
     lastName: 'Hancock'
-  }).then(function(){
+  }).then(function () {
     User.findAll({
-      where:{
+      where: {
         createdAt: {
           $lt: new Date(),
           $gt: new Date(new Date() - 24 * 60 * 60 * 1000)
         }
       }
-    }).then(function(user){
+    }).then(function (user) {
       console.log(user);
       res.json(user);
-    })
-  })
-})
+    });
+  });
+});
 // app.use('/orm',router)
 // app.listen(4220,function(result){
 //   console.log("OK")
 // })
 
-module.exports = router
+module.exports = router;
