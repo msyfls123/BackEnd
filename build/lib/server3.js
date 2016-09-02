@@ -17,6 +17,8 @@ var sequelize = new Sequelize('test', 'test', 'test', {
 });
 var Project = sequelize.import(__dirname + "/../model/project");
 var User = sequelize.import(__dirname + "/../model/user");
+Project.sync();
+User.sync();
 
 router.get('/find', function (req, res) {
   Project.findAll({
