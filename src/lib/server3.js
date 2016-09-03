@@ -27,14 +27,14 @@ router.get('/find',function(req, res){
       }
     }
   }).then(function(project) {
-    console.log(project);
+    // console.log(project);
     res.json(project);
   })
 })
 
 router.get('/',function(req,res){
   User.create({
-    firstName: 'John',
+    first_name: 'John',
     lastName: 'Hancock'
   }).then(function(){
     User.findAll({
@@ -45,7 +45,7 @@ router.get('/',function(req,res){
         }
       }
     }).then(function(user){
-      console.log(user);
+      // console.log(user);
       res.json(user);
     })
   })

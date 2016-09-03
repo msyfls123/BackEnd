@@ -6,6 +6,7 @@ var bodyParser = require('body-parser');
 var multer = require('multer');
 var ROOT_PATH = path.join(__dirname,'../../');
 var router = require('./server3');
+var session = require('./server5').session;
 
 var webpack = require('webpack');
 var config = require('../../webpack.config');
@@ -32,7 +33,31 @@ fs.writeFile(path.join(ROOT_PATH,'data','data.json'),dataObjStr,options,function
 })
 
 var app = express();
+app.use(session);
 app.use('/orm',router);
+
+// Access the session as req.session
+app.get('/session', function(req, res, next) {
+  var sess = req.session
+  if (sess.views) {
+    sess.views++
+    res.setHeader('Content-Type', 'text/html')
+    res.write('<p>views: ' + sess.views + '</p>')
+    res.write('<p>expires in: ' + (sess.cookie.maxAge / 1000) + 's</p>')
+    res.end()
+  } else {
+    sess.views = 1
+    res.end('welcome to the session demo. refresh!')
+  }
+})
+
+app.get('/logout',function(req,res){
+  req.session.destroy(function(err) {
+    // cannot access session here
+    res.end("Logout!")
+  })
+})
+
 
 //handlebars
 app.set('views',path.join(ROOT_PATH,'views'));
