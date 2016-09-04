@@ -32,16 +32,23 @@ router.get('/find',function(req, res){
   })
 })
 
+var today = new Date(),tomorrow;
+today = new Date(today.getFullYear(),today.getMonth(),today.getDate());
+tomorrow = new Date(today.getTime()+86400000)
+
 router.get('/',function(req,res){
-  User.create({
-    first_name: 'John',
-    lastName: 'Hancock'
-  }).then(function(){
+  User.findOrCreate({
+    where:{
+      first_name: 'John'+Math.floor(0x10000*Math.random()),
+      lastName: 'Hancock'
+    }
+  }).spread(function(user,created){
+    console.log(user.get({plain:true}),"created:"+created)
     User.findAll({
       where:{
         createdAt: {
-          $lt: new Date(),
-          $gt: new Date(new Date() - 24 * 60 * 60 * 1000)
+          $lt: tomorrow,
+          $gte: today
         }
       }
     }).then(function(user){

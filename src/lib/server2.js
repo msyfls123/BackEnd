@@ -5,8 +5,8 @@ var exphbs  = require('express-handlebars');
 var bodyParser = require('body-parser');
 var multer = require('multer');
 var ROOT_PATH = path.join(__dirname,'../../');
-var router = require('./server3');
-var session = require('./server5').session;
+var router = require('./sqltest');
+var session = require('./session').session;
 
 var webpack = require('webpack');
 var config = require('../../webpack.config');
