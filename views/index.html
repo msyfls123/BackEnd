@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+  <input type="file" id="files" name="files[]" multiple accept="image/*"/>
+  <output id="list"></output>
+  <ul id="box"></ul>
+  <script>
+    function handleFileSelect(evt) {
+      var files = evt.target.files; // FileList object
+
+      // files is a FileList of File objects. List some properties.
+      var output = [];
+      for (var i = 0, f; f = files[i]; i++) {
+        output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
+                    f.size, ' bytes, last modified: ',
+                    f.lastModifiedDate.toLocaleDateString(), '</li>');
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+            var img = document.createElement('img');
+            img.src = this.result;
+            var li = document.createElement('li');
+            li.appendChild(img);
+            document.getElementById('box').appendChild(li)
+        }
+        reader.readAsDataURL(document.getElementById('files').files[i]);
+      }
+      document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
+    }
+
+    document.getElementById('files').addEventListener('change', handleFileSelect, false);
+  </script>
+</body>
+</html>

@@ -53,7 +53,7 @@ app.get('/session', function(req, res, next) {
 
 app.get('/logout',function(req,res){
   req.session.destroy(function(err) {
-    // cannot access session here
+    res.clearCookie('session_cookie_name')
     res.end("Logout!")
   })
 })
@@ -61,12 +61,13 @@ app.get('/logout',function(req,res){
 
 //handlebars
 app.set('views',path.join(ROOT_PATH,'views'));
-app.engine('handlebars', exphbs({
+app.engine('.hbs', exphbs({
     defaultLayout: 'main',
+    extname: '.hbs',
     layoutsDir: path.join(ROOT_PATH,'views/layouts/')
   })
 );
-app.set('view engine', 'handlebars');
+app.set('view engine', '.hbs');
 
 //bodyParser
 app.use(bodyParser.json()); // for parsing application/json
@@ -99,7 +100,7 @@ var storage = multer.diskStorage({
 var upload = multer({ storage: storage })
 
 app.get('/form',function(req, res){
-  res.render('test');
+  res.render('form');
 })
 
 app.post('/api',upload.single('file'), function(req, res){
@@ -122,6 +123,10 @@ app.get('/index', function (req, res) {
 //test...
 app.get('/', function(req, res) {
   res.sendFile(path.join(ROOT_PATH, 'index.html'));
+});
+
+app.get('/test', function(req, res) {
+  res.render('test');
 });
 
 app.get('/time/:time', function (req, res) {

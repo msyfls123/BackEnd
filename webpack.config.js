@@ -9,6 +9,7 @@ var BUILD_PATH = path.resolve(ROOT_PATH, 'dist');
 module.exports = {
   entry: {
     main: path.resolve(APP_PATH,'main.js'),
+    test: path.resolve(APP_PATH,'test.js'),
     vendors:["react","react-dom","react-router"]
   },
   output: {
