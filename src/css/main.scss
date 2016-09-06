@@ -4,9 +4,10 @@ body{
 }
 .container2 {
   display: table;
-  background-color: rgba(255, 255, 255, 0.2);
+  // background-color: rgba(255, 255, 255, 0.2);
   max-width: 80%;
   margin: 20px auto;
+  padding-bottom: 15px;
 }
 .container2 > div,
 .gu-mirror {
@@ -20,6 +21,7 @@ body{
   cursor: grab;
   cursor: -moz-grab;
   cursor: -webkit-grab;
+  border-radius: 4px!important;
 }
 .gu-mirror {
   cursor: grabbing;
@@ -30,6 +32,7 @@ body{
   position: fixed !important;
   margin: 0 !important;
   z-index: 9999 !important;
+  border-radius: 4px!important;
   opacity: 0.8;
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
   filter: alpha(opacity=80);

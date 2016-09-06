@@ -1,5 +1,12 @@
 # Node同构应用开发
 
+##线上DEMO
++ React可拖拽组件 [masy.site](http://masy.site/)
++ 上传图片 [masy.site/form](http://masy.site/form)
++ 本地显示图片 [masy.site/test](http://masy.site/test)
++ 会话[View](http://masy.site/session)[Logout](http://masy.site/logout)
++ 数据库 [masy.site/orm](http://masy.site/orm)
+
 ##开发工具
 + 开发环境：EcmaScript2015
  +  "babel"

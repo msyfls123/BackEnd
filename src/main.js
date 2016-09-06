@@ -22,7 +22,7 @@ class Root extends Component {
     this.handleClick = this.handleClick.bind(this)
     let newArray = []
     for (var i = 1; i < 8; i++) {
-      newArray[newArray.length] = i.toString() + " Test"
+      newArray[newArray.length] = " Test"
     }
     this.state={data:newArray};
   }
@@ -30,8 +30,8 @@ class Root extends Component {
     return (
       <div className="container">
         <div className="row">
-          <div className='container2 col-lg-6 table' ref='container'>
-              {this.state.data.map((d,i) => (<div data-id={i} key={i}>{d}</div>))}
+          <div className='container2 col-lg-6 table list-group' ref='container'>
+              {this.state.data.map((d,i) => (<div data-id={i} key={i} className="list-group-item"><span className="badge text-right" onClick={this.handleBadge.bind(this,i+1)}>{i+1}</span> {d}</div>))}
           </div>
         </div>
         <div className="row">
@@ -61,9 +61,12 @@ class Root extends Component {
   handleClick(){
     if(!this.refs.input.value){return false}
     let newData = this.state.data.slice(0)
-    newData[newData.length] = (newData.length+1).toString() + " " +this.refs.input.value
+    newData[newData.length] = this.refs.input.value
     this.refs.input.value=""
     this.setState({data:newData})
+  }
+  handleBadge(i){
+    console.log(i)
   }
 }
 
