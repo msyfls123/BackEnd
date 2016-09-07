@@ -123,8 +123,12 @@ app.get('/index', function (req, res) {
 });
 
 //test...
-app.get('/', function (req, res) {
+app.get('/react', function (req, res) {
   res.sendFile(path.join(ROOT_PATH, 'index.html'));
+});
+
+app.get('/', function (req, res) {
+  res.render('index');
 });
 
 app.get('/test', function (req, res) {
