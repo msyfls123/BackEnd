@@ -1,7 +1,7 @@
 # Node同构应用开发
 
 ##线上DEMO
-+ React可拖拽组件 [masy.site](http://masy.site/)
++ React可拖拽组件 [masy.site/react](http://masy.site/react)
 + 上传图片 [masy.site/form](http://masy.site/form)
 + 本地显示图片 [masy.site/test](http://masy.site/test)
 + 会话[View](http://masy.site/session)[Logout](http://masy.site/logout)
