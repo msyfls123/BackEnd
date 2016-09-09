@@ -1,0 +1,44 @@
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <div class="row">
+      <h1 class="col-md-12">Login</h1>
+      {{#if error}}
+      <div class="col-md-12">
+        <div class="alert alert-warning alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <strong>Warning!</strong> {{error}}
+        </div>
+      </div>
+      {{/if}}
+    </div>
+
+    <form class="col-md-12" action="/reg" method="post">
+      <div class="row">
+        <div class="input-group">
+          <label>Username</label>
+          <input type="text" class="form-control" name="username" value="{{username}}" placeholder="Please input your username" required>
+          {{#if uerror}}
+            <div class="alert alert-warning alert-dismissible" role="alert" style="margin-top: 30px;padding:10px 30px 8px 8px">
+              <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+              <span class="glyphicon glyphicon-remove-sign"></span> {{uerror}}
+            </div>
+          {{/if}}
+        </div><!-- /input-group -->
+        <div class="input-group">
+          <label>Password</label>
+          <input type="password" class="form-control" name="password" value="{{password}}" placeholder="Please input your password" required>
+          {{#if perror}}
+            <div class="alert alert-warning alert-dismissible" role="alert" style="margin-top: 30px;padding:10px 30px 8px 8px">
+              <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+              <span class="glyphicon glyphicon-remove-sign"></span>  {{perror}}
+            </div>
+          {{/if}}
+        </div><!-- /input-group -->
+        <div class="input-group">
+          <label>&nbsp;</label>
+          <button type="submit" class="btn btn-primary btn-block"><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Confirm</button>
+        </div>
+      </div><!-- /.row -->
+    </form>
+  </div>
+</div>
