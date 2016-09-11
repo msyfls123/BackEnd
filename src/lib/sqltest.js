@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var app = express();
+var bodyParser = require('body-parser');
 
 var Sequelize = require('sequelize');
 var sequelize = new Sequelize('test', 'test', 'test', {
@@ -18,6 +19,10 @@ var User = sequelize.import(__dirname + "/../model/user")
 Project.sync()
 User.sync()
 
+//bodyParser
+router.use(bodyParser.json()); // for parsing application/json
+router.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+
 router.get('/find',function(req, res){
   Project.findAll({
     where:{
@@ -32,11 +37,27 @@ router.get('/find',function(req, res){
   })
 })
 
-var today = new Date(),tomorrow;
-today = new Date(today.getFullYear(),today.getMonth(),today.getDate());
-tomorrow = new Date(today.getTime()+86400000)
+router.get('/get',function(req, res){
+  console.log(req.query)
+  User.findAll({
+    where:{
+      createdAt: {
+        $gt: new Date(Number(req.query.date)),
+        $lt: new Date(Number(req.query.date) + 24 * 60 * 60 * 1000)
+      }
+    }
+  }).then(function(user) {
+    res.json(user);
+  })
+})
+
 
 router.get('/',function(req,res){
+
+  var today = new Date(),tomorrow;
+  today = new Date(today.getFullYear(),today.getMonth(),today.getDate());
+  tomorrow = new Date(today.getTime()+86400000)
+
   User.findOrCreate({
     where:{
       first_name: 'John'+Math.floor(0x10000*Math.random()),
@@ -57,6 +78,7 @@ router.get('/',function(req,res){
     })
   })
 })
+
 // app.use('/orm',router)
 // app.listen(4220,function(result){
 //   console.log("OK")

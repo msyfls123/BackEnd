@@ -133,6 +133,10 @@ app.get('/test', function(req, res) {
   res.render('test');
 });
 
+app.get('/date', function(req, res) {
+  res.render('date');
+});
+
 app.get('/time/:time', function (req, res) {
     res.send("Success: "+req.params.time+"\nQuery: "+req.query.time);
 });

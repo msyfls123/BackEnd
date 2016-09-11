@@ -6,10 +6,14 @@ var ROOT_PATH = path.resolve(__dirname);
 var APP_PATH = path.resolve(ROOT_PATH, 'src');
 var BUILD_PATH = path.resolve(ROOT_PATH, 'dist');
 
+var extractCSS = new ExtractTextPlugin('one.css');
+var extractSCSS = new ExtractTextPlugin('bundle.css');
+
 module.exports = {
   entry: {
     main: path.resolve(APP_PATH,'main.js'),
     test: path.resolve(APP_PATH,'test.js'),
+    date: path.resolve(APP_PATH,'date.js'),
     vendors:["react","react-dom","react-router"]
   },
   output: {
@@ -20,7 +24,8 @@ module.exports = {
   module:{
     loaders:[
       {test:/\.js$/, loader:'babel', exclude:/node_modules/},
-      {test:/\.scss$/, loader:ExtractTextPlugin.extract("style-loader", "css-loader!sass-loader")},
+      {test:/\.scss$/, loader:extractSCSS.extract("style-loader", "css-loader!sass-loader")},
+      {test:/\.css$/, loader:extractCSS.extract("style-loader", "css-loader")},
       {test:/\.(png|jpg|gif)$/, loader:'url?limit=8192&name=[path][name].[ext]?[hash]'},
       {test:/\.(html|tpl)$/, loader:'html-loader'}
     ]
@@ -50,7 +55,8 @@ module.exports = {
           NODE_ENV: JSON.stringify("production"),
       },
     }),
-    new ExtractTextPlugin("bundle.css")
+    extractCSS,
+    extractSCSS
   ],
   devServer:{
     historyApiFallback: true,
