@@ -16,12 +16,25 @@ class Root extends Component {
     this.handleChange=this.handleChange.bind(this);
     this.state={date:moment(),user:[]};
   }
+  componentDidMount(){
+    let _this=this;
+    var today = new Date(this.state.date._d);
+    today = new Date(today.getFullYear(),today.getMonth(),today.getDate());
+    fetch('/orm/get?date='+today.getTime(),{method:'GET'})
+    .then(response =>response.json())
+    .then(json =>_this.setState(
+      {
+        user:json
+      }
+    ))
+  }
   handleChange(date){
     // console.log(date._d.toLocaleString())
     let _this=this;
-    var myForm = new FormData();
-    myForm.append('date',date)
-    fetch('/orm/get?date='+date,{method:'GET'})
+    var today = new Date(date);
+    today = new Date(today.getFullYear(),today.getMonth(),today.getDate());
+    // today=parseInt(today)/1000;
+    fetch('/orm/get?date='+today.getTime(),{method:'GET'})
     .then(response =>response.json())
     .then(json =>_this.setState(
       {
