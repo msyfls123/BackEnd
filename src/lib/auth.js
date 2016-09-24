@@ -1,29 +1,8 @@
-const fs = require("fs");
-const path = require('path');
 const express = require('express');
-const exphbs  = require('express-handlebars');
-const bodyParser = require('body-parser');
-const multer = require('multer');
-const ROOT_PATH = path.join(__dirname,'../../');
 const auth_lib = require('./auth_lib');
+var router = express.Router();
 
-var app = express();
-
-//handlebars
-app.set('views',path.join(ROOT_PATH,'views'));
-app.engine('.hbs', exphbs({
-    defaultLayout: 'main',
-    extname: '.hbs',
-    layoutsDir: path.join(ROOT_PATH,'views/layouts/')
-  })
-);
-app.set('view engine', '.hbs');
-
-//bodyParser
-app.use(bodyParser.json()); // for parsing application/json
-app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
-
-app.get('/reg',function(req,res){
+router.get('/reg',function(req,res){
   res.render('reg',{
     error:'',
     username:'',
@@ -33,13 +12,31 @@ app.get('/reg',function(req,res){
   })
 })
 
-app.post('/reg',function(req,res){
+router.post('/reg',function(req,res){
   const username = req.body.username;
   const password = req.body.password;
   console.log(req.body)
-  auth_lib.createUser(username,password,res);
+  auth_lib.createUser(username,password).spread(function(user,created){
+    if(created){
+      res.render('success',{user})
+    }else{
+      res.render('reg',{
+        error:'The username has been userd',
+        uerror:'Please choose another name!'
+      })
+    }
+  });
 })
 
-app.listen(4200,function(err){
-  console.log("Server OK")
+router.get('/active/:code',function(req,res){
+  auth_lib.activeUser(req.params.code).then(
+    user => user?user.update({
+      active:true,
+      activeCode:null
+    }):null
+  ).then(
+    user => res.render('success',{user})
+  )
 })
+
+module.exports = router

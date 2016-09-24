@@ -13,33 +13,38 @@ const sequelize = new Sequelize('test', 'test', 'test', {
 var Auth = sequelize.import(__dirname + "/../model/auth")
 Auth.sync()
 
-module.exports.createUser=function(username,password,res){
+module.exports.createUser=function(username,password){
+  //make password hash
   var hmac = crypto.createHmac('sha1', 'ebichu');
   hmac.update(password);
   const password_hash = hmac.digest('hex');
+  //make username hash
   var hmac2 = crypto.createHmac('sha1', 'pikachu');
   hmac2.update(username);
   const uuid = hmac2.digest('hex');
-  Auth.findOrCreate({
+  //make active url hash
+  var hmac3 = crypto.createHmac('sha1', 'helloworld');
+  hmac3.update(username+new Date().getTime());
+  const activeCode = hmac3.digest('hex');
+
+  return Auth.findOrCreate({
     where:{
       username:username
     },
     defaults:{
       password:password_hash,
       uuid:uuid,
-      active:false
+      active:false,
+      avatar:null,
+      activeCode:activeCode
     }
-  }).spread(function(user,created){
-    if(created){
-      res.render('success',{
-        username:username,
-        uuid:uuid
-      })
-    }else{
-      res.render('reg',{
-        error:'The username has been userd',
-        uerror:'Please choose another name!'
-      })
+  })
+}
+
+module.exports.activeUser=function(activeCode){
+  return Auth.findOne({
+    where:{
+      activeCode:activeCode
     }
   })
 }

@@ -1,6 +1,24 @@
-<div class="jumbotron">
-  <h1>Hello, world!</h1>
-  <p>Username: {{username}}</p>
-  <p>UUID: {{uuid}}</p>
-  <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
-</div>
+{{#if user}}
+  <div class="jumbotron">
+    <h1>Hello, world!</h1>
+    <p>Username: {{user.username}}</p>
+    <p>UUID: {{user.uuid}}</p>
+    {{#if user.active}}
+    <p>
+      You are actived!
+    </p>
+    {{else}}
+    <p>Please active your account by clink <a href="/user/active/{{user.activeCode}}" target="_blank"><p>
+      http://127.0.0.1/user/active/{{user.activeCode}}
+    </a></p>
+    {{/if}}
+    <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
+  </div>
+{{else}}
+  <div class="col-md-12">
+    <div class="alert alert-warning alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <strong>Warning!</strong> Haven't find your user！
+    </div>
+  </div>
+{{/if}}

@@ -1,4 +1,6 @@
-module.exports = function(sequelize, DataTypes) {
+"use strict";
+
+module.exports = function (sequelize, DataTypes) {
   return sequelize.define("user", {
     first_name: {
       type: DataTypes.STRING
@@ -6,7 +8,7 @@ module.exports = function(sequelize, DataTypes) {
     lastName: {
       type: DataTypes.STRING
     }
-  },{
+  }, {
     freezeTableName: true
-  })
-}
+  });
+};

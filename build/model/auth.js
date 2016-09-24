@@ -1,4 +1,6 @@
-module.exports = function(sequelize, DataTypes) {
+"use strict";
+
+module.exports = function (sequelize, DataTypes) {
   return sequelize.define("auth", {
     username: {
       type: DataTypes.STRING,
@@ -7,22 +9,22 @@ module.exports = function(sequelize, DataTypes) {
     password: {
       type: DataTypes.STRING
     },
-    active:{
+    active: {
       type: DataTypes.BOOLEAN
     },
-    activeCode:{
+    activeCode: {
       type: DataTypes.STRING,
       allowNull: true
     },
-    uuid:{
+    uuid: {
       type: DataTypes.STRING,
       unique: true
     },
-    avatar:{
+    avatar: {
       type: DataTypes.STRING,
       allowNull: true
     }
-  },{
+  }, {
     freezeTableName: true
-  })
-}
+  });
+};
