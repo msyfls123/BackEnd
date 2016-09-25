@@ -8,9 +8,12 @@
       You are actived!
     </p>
     {{else}}
-    <p>Please active your account by clink <a href="/user/active/{{user.activeCode}}" target="_blank"><p>
+    <p>
+      Check it in your email address: {{user.email}}
+    </p>
+    <!-- <p>Please active your account by clink <a href="/user/active/{{user.activeCode}}" target="_blank">
       http://127.0.0.1/user/active/{{user.activeCode}}
-    </a></p>
+    </a></p> -->
     {{/if}}
     <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
   </div>

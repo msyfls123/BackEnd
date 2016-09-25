@@ -11,9 +11,10 @@ const sequelize = new Sequelize('test', 'test', 'test', {
   },
 });
 var Auth = sequelize.import(__dirname + "/../model/auth")
+// Auth.drop()
 Auth.sync()
 
-module.exports.createUser=function(username,password){
+module.exports.createUser=function(username,password,email){
   //make password hash
   var hmac = crypto.createHmac('sha1', 'ebichu');
   hmac.update(password);
@@ -29,10 +30,15 @@ module.exports.createUser=function(username,password){
 
   return Auth.findOrCreate({
     where:{
-      username:username
+      $or:[
+        {username:username},
+        {email:email}
+      ]
     },
     defaults:{
       password:password_hash,
+      username:username,
+      email:email,
       uuid:uuid,
       active:false,
       avatar:null,

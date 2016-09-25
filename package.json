@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "set NODE_ENV=dev&& babel-node src/lib/server2.js",
+    "go": "set NODE_ENV=dev&& babel-node src/lib/app.js",
     "build": "babel src/model -d build/model && babel src/lib -d build/lib && babel src/components -d build/components && webpack --progress --profile --colors",
     "serve": "node build/lib/server2.js"
   },

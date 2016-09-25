@@ -23,6 +23,13 @@ module.exports = function (sequelize, DataTypes) {
     avatar: {
       type: DataTypes.STRING,
       allowNull: true
+    },
+    email: {
+      type: DataTypes.STRING,
+      unique: true,
+      validate: {
+        isEmail: true
+      }
     }
   }, {
     freezeTableName: true
